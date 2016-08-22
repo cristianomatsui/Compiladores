@@ -1,0 +1,5 @@
+{ exemplo de programa na linguagem TINY
+read x ;
+read y ;
+soma := x + y ;
+write soma
