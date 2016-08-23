@@ -1,12 +1,13 @@
+def read_char(linha, coluna, char, counter, file):
+    file.seek(counter)
+    counter += 1
+    char = file.readline(1)
+    coluna += 1
+    if char == '\n':
+        linha += 1
+    return linha, coluna, char, counter
+
 def main():
-    def read_char(linha, coluna, char, counter):
-        file.seek(counter)
-        counter += 1
-        char = file.readline(1)
-        coluna += 1
-        if char == '\n':
-            linha += 1
-        return linha, coluna, char, counter
 
     archive = input("Insira o nome do arquivo: ")
     file = open(archive, "r")
@@ -16,17 +17,20 @@ def main():
     counter = 1
 
 
+
     while char:
         if char == '{':         #tratamento de comentários
             while char != '}':
-                linha, coluna, char, counter = read_char(linha, coluna, char, counter)
+                linha, coluna, char, counter = read_char(linha, coluna, char, counter, file)
                 if (not char):
                     print ("Erro: Linha %d Coluna %d, Operador '}' esperado." %(linha, coluna))
-                    exit("Error")
-
-        linha, coluna, char, counter = read_char(linha, coluna, char, counter)
+                    exit()
+        linha, coluna, char, counter = read_char(linha, coluna, char, counter, file)
+        print(char)
 
     file.close()
+
+    return
 
 
 main()
