@@ -3,6 +3,8 @@ ReservedTokenTable = {'if' : 'IF', 'then' : 'THEN', 'else' : 'ELSE', 'end' : 'EN
                '*' : 'TIMES', '/' : 'DIV', '=' : 'EQUAL', '<' : 'LESS', '(' : 'LBRACKET',
                ')' : 'RBRACKET', ';' : 'DOTCOMA', ':=' : 'ATRIB'}
 
+NumList = []
+
 # Função que executa leitura do arquivo e atualização dos ponteiros de posição
 def read_char(linha, coluna, char, counter, file):
     file.seek(counter)
@@ -13,6 +15,32 @@ def read_char(linha, coluna, char, counter, file):
         linha += 1
         coluna = 0
     return linha, coluna, char, counter
+
+def read_num(linha, coluna, char, counter, file):
+    file.seek(counter)
+    num = char
+
+    while char.isnumeric():
+
+        char = file.readline(1)
+        coluna += 1
+        counter += 1
+
+        if (char == ' ') | (char == '\n'):
+            if (char == '\n')
+                linha += 1
+                coluna = 0
+
+            return(linha, coluna, counter, num)
+
+        elif char.isnumeric():
+            num += char
+
+        else:
+            print("Erro: Linha %d Coluna %d, número inválido." % (linha, coluna))
+            exit()
+
+
 
 def main():
 
@@ -32,8 +60,16 @@ def main():
                 if (not char):
                     print ("Erro: Linha %d Coluna %d, Operador '}' esperado." %(linha, coluna))
                     exit()
+
+#        elif char.isnumeric():
+
+
+        elif char in ReservedTokenTable:
+            print("<%s>" %(ReservedTokenTable[char]), end=''),
+
+
         linha, coluna, char, counter = read_char(linha, coluna, char, counter, file)
-        print(char)
+        print(char, end='')
 
     file.close()
 
